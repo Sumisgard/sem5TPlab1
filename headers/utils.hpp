@@ -13,13 +13,18 @@ namespace utils
             std::string brand;
             std::string model;
         public:
-            void set_brand(std::string brand)
+            void set_brand(std::string brand);
+            void set_model(std::string model)
             {
-                this->brand = brand;
+                this->model = model;
             }
-            void set_model(std::string brand)
+            std::string get_brand()
             {
-                this->brand = brand;
+                return this->brand;
+            }
+            std::string get_model()
+            {
+                return this->model;
             }
         };
 
@@ -42,6 +47,18 @@ namespace utils
             {
                 this->checkpointType = type;
             }
+            unsigned int get_engineVolume()
+            {
+                return this->engineVolume;
+            }
+            std::string get_color()
+            {
+                return this->color;
+            }
+            std::string get_checkpointType()
+            {
+                return this->checkpointType;
+            }
         };
 
         class Motorcycle: public Vehicle
@@ -62,6 +79,18 @@ namespace utils
             void set_preferredTerrain(std::string terrain)
             {
                 this->preferredTerrain = terrain;
+            }
+            unsigned int get_engineVolume()
+            {
+                return this->engineVolume;
+            }
+            unsigned int get_horsepower()
+            {
+                return this->horsepower;
+            }
+            std::string get_preferredTerrain()
+            {
+                return this->preferredTerrain;
             }
         };
 
@@ -84,6 +113,18 @@ namespace utils
             {
                 this->destination = destination;
             }           
+            unsigned int get_passengerSeats()
+            {
+                return this->passengerSeats;
+            }
+            unsigned int get_totalSeats()
+            {
+                return this->totalSeats;
+            }
+            std::string get_destination()
+            {
+                return this->destination;
+            }
         };
 
         Car* cars;
