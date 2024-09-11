@@ -6,26 +6,26 @@ namespace utils
 {
     class Garage
     {
+    public:
+        Garage();
+        void addCar();
+        void addMotorcycle();
+        void addBus();
     private:
+        unsigned int carCount;
+        unsigned int motorcycleCount;
+        unsigned int busCount;
         class Vehicle
         {
         private:
             std::string brand;
             std::string model;
         public:
+            Vehicle(std::string brand, std::string model);
             void set_brand(std::string brand);
-            void set_model(std::string model)
-            {
-                this->model = model;
-            }
-            std::string get_brand()
-            {
-                return this->brand;
-            }
-            std::string get_model()
-            {
-                return this->model;
-            }
+            void set_model(std::string model);
+            std::string get_brand();
+            std::string get_model();
         };
 
         class Car: public Vehicle
@@ -35,30 +35,13 @@ namespace utils
             std::string color;
             std::string checkpointType;
         public:
-            void set_engineVolume(unsigned int liters)
-            {
-                this->engineVolume = liters;
-            }
-            void set_color(std::string color)
-            {
-                this->color = color;
-            }
-            void set_checkpointType(std::string type)
-            {
-                this->checkpointType = type;
-            }
-            unsigned int get_engineVolume()
-            {
-                return this->engineVolume;
-            }
-            std::string get_color()
-            {
-                return this->color;
-            }
-            std::string get_checkpointType()
-            {
-                return this->checkpointType;
-            }
+            Car(std::string brand, std::string model, unsigned int liters, std::string color, std::string type);
+            void set_engineVolume(unsigned int liters);
+            void set_color(std::string color);
+            void set_checkpointType(std::string type);
+            unsigned int get_engineVolume();
+            std::string get_color();
+            std::string get_checkpointType();
         };
 
         class Motorcycle: public Vehicle
@@ -68,30 +51,13 @@ namespace utils
             unsigned int horsepower;
             std::string preferredTerrain;
         public:
-            void set_engineVolume(unsigned int liters)
-            {
-                this->engineVolume = liters;
-            }
-            void set_horsepower(unsigned int power)
-            {
-                this->horsepower = power;
-            }
-            void set_preferredTerrain(std::string terrain)
-            {
-                this->preferredTerrain = terrain;
-            }
-            unsigned int get_engineVolume()
-            {
-                return this->engineVolume;
-            }
-            unsigned int get_horsepower()
-            {
-                return this->horsepower;
-            }
-            std::string get_preferredTerrain()
-            {
-                return this->preferredTerrain;
-            }
+            Motorcycle(std::string brand, std::string model, unsigned int liters, unsigned int power, std::string terrain);
+            void set_engineVolume(unsigned int liters);
+            void set_horsepower(unsigned int power);
+            void set_preferredTerrain(std::string terrain);
+            unsigned int get_engineVolume();
+            unsigned int get_horsepower();
+            std::string get_preferredTerrain();
         };
 
         class Bus: public Vehicle
@@ -101,37 +67,18 @@ namespace utils
             unsigned int totalSeats;
             std::string destination;
         public:
-            void set_passengerSeats(unsigned int seats)
-            {
-                this->passengerSeats = seats;
-            }
-            void set_totalSeats(unsigned int seats)
-            {
-                this->totalSeats = seats;
-            }
-            void set_destination(std::string destination)
-            {
-                this->destination = destination;
-            }           
-            unsigned int get_passengerSeats()
-            {
-                return this->passengerSeats;
-            }
-            unsigned int get_totalSeats()
-            {
-                return this->totalSeats;
-            }
-            std::string get_destination()
-            {
-                return this->destination;
-            }
+            Bus(std::string brand, std::string model, unsigned int passengerSeats, unsigned int totalSeats, std::string destination);
+            void set_passengerSeats(unsigned int seats);
+            void set_totalSeats(unsigned int seats);
+            void set_destination(std::string destination);      
+            unsigned int get_passengerSeats();
+            unsigned int get_totalSeats();
+            std::string get_destination();
         };
 
         Car* cars;
         Motorcycle* motorcycles;
         Bus* buses;
-
-    public:
 
     };
 }
