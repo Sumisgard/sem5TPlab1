@@ -8,9 +8,21 @@ namespace utils
     {
     public:
         Garage();
-        void addCar();
-        void addMotorcycle();
-        void addBus();
+        unsigned int get_carCount();
+        unsigned int get_motorcycleCount();
+        unsigned int get_busCount();
+        void set_carData(unsigned int index, std::string brand, std::string model, unsigned int liters, std::string color, std::string type);
+        void set_motorcycleData(unsigned int index, std::string brand, std::string model, unsigned int liters,  unsigned int power, std::string terrain);
+        void set_busData(unsigned int index, std::string brand, std::string model, unsigned int passengerSeats, unsigned int totalSeats, std::string destination);
+        void addCar(std::string brand, std::string model, unsigned int liters, std::string color, std::string type);
+        void addMotorcycle(std::string brand, std::string model, unsigned int liters,  unsigned int power, std::string terrain);
+        void addBus(std::string brand, std::string model, unsigned int passengerSeats, unsigned int totalSeats, std::string destination);
+        void deleteCar(unsigned int index);
+        void deleteMotorcycle(unsigned int index);
+        void deleteBus(unsigned int index);
+        void listVehiclesInGarage();
+        void saveToFile(std::string filename);
+        static Garage loadFromFile(std::string filename);
     private:
         unsigned int carCount;
         unsigned int motorcycleCount;
@@ -35,6 +47,7 @@ namespace utils
             std::string color;
             std::string checkpointType;
         public:
+            Car();
             Car(std::string brand, std::string model, unsigned int liters, std::string color, std::string type);
             void set_engineVolume(unsigned int liters);
             void set_color(std::string color);
@@ -51,6 +64,7 @@ namespace utils
             unsigned int horsepower;
             std::string preferredTerrain;
         public:
+            Motorcycle();
             Motorcycle(std::string brand, std::string model, unsigned int liters, unsigned int power, std::string terrain);
             void set_engineVolume(unsigned int liters);
             void set_horsepower(unsigned int power);
@@ -67,6 +81,7 @@ namespace utils
             unsigned int totalSeats;
             std::string destination;
         public:
+            Bus();
             Bus(std::string brand, std::string model, unsigned int passengerSeats, unsigned int totalSeats, std::string destination);
             void set_passengerSeats(unsigned int seats);
             void set_totalSeats(unsigned int seats);

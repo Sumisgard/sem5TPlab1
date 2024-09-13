@@ -7,6 +7,35 @@ namespace utils
         this->carCount = 0;
         this->motorcycleCount = 0;
         this->busCount = 0;
+        
+        this->cars = nullptr;
+        this->motorcycles = nullptr;
+        this->buses = nullptr;
+    }
+    unsigned int Garage::get_carCount()
+    {
+        return this->carCount;
+    }
+    unsigned int Garage::get_motorcycleCount()
+    {
+        return this->motorcycleCount;
+    }
+    unsigned int Garage::get_busCount()
+    {
+        return this->busCount;
+    }
+    void Garage::addCar(std::string brand, std::string model, unsigned int liters, std::string color, std::string type)
+    {
+        if (this->carCount == 0)
+        {
+            ++(this->carCount);
+            this->cars = new Car(brand, model, liters, color, type);
+        }
+        else if (this->carCount == 1)
+        {
+            ++(this->carCount);
+            Car* newCars = new Car[carCount];
+        }
     }
     Garage::Vehicle::Vehicle(std::string brand, std::string model)
     {
@@ -28,6 +57,12 @@ namespace utils
     std::string Garage::Vehicle::get_model()
     {
         return this->model;
+    }
+    Garage::Car::Car()
+    {
+        this->engineVolume = 0;
+        this->color = "";
+        this->checkpointType = "";
     }
     Garage::Car::Car(std::string brand, std::string model, unsigned int liters, std::string color, std::string type): Vehicle(brand, model)
     {
