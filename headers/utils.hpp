@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 
 namespace utils
 {
@@ -8,12 +9,10 @@ namespace utils
     {
     public:
         Garage();
+        ~Garage();
         unsigned int get_carCount();
         unsigned int get_motorcycleCount();
         unsigned int get_busCount();
-        void set_carData(unsigned int index, std::string brand, std::string model, unsigned int liters, std::string color, std::string type);
-        void set_motorcycleData(unsigned int index, std::string brand, std::string model, unsigned int liters,  unsigned int power, std::string terrain);
-        void set_busData(unsigned int index, std::string brand, std::string model, unsigned int passengerSeats, unsigned int totalSeats, std::string destination);
         void addCar(std::string brand, std::string model, unsigned int liters, std::string color, std::string type);
         void addMotorcycle(std::string brand, std::string model, unsigned int liters,  unsigned int power, std::string terrain);
         void addBus(std::string brand, std::string model, unsigned int passengerSeats, unsigned int totalSeats, std::string destination);
@@ -33,6 +32,7 @@ namespace utils
             std::string brand;
             std::string model;
         public:
+            Vehicle();
             Vehicle(std::string brand, std::string model);
             void set_brand(std::string brand);
             void set_model(std::string model);
@@ -48,10 +48,12 @@ namespace utils
             std::string checkpointType;
         public:
             Car();
+            Car(Car &car);
             Car(std::string brand, std::string model, unsigned int liters, std::string color, std::string type);
             void set_engineVolume(unsigned int liters);
             void set_color(std::string color);
             void set_checkpointType(std::string type);
+            void set_carData(std::string brand, std::string model, unsigned int liters, std::string color, std::string type);
             unsigned int get_engineVolume();
             std::string get_color();
             std::string get_checkpointType();
@@ -65,10 +67,12 @@ namespace utils
             std::string preferredTerrain;
         public:
             Motorcycle();
+            Motorcycle(Motorcycle &motorcycle);
             Motorcycle(std::string brand, std::string model, unsigned int liters, unsigned int power, std::string terrain);
             void set_engineVolume(unsigned int liters);
             void set_horsepower(unsigned int power);
             void set_preferredTerrain(std::string terrain);
+            void set_motorcycleData(std::string brand, std::string model, unsigned int liters,  unsigned int power, std::string terrain);
             unsigned int get_engineVolume();
             unsigned int get_horsepower();
             std::string get_preferredTerrain();
@@ -82,10 +86,12 @@ namespace utils
             std::string destination;
         public:
             Bus();
+            Bus(Bus &bus);
             Bus(std::string brand, std::string model, unsigned int passengerSeats, unsigned int totalSeats, std::string destination);
             void set_passengerSeats(unsigned int seats);
             void set_totalSeats(unsigned int seats);
-            void set_destination(std::string destination);      
+            void set_destination(std::string destination);
+            void set_busData(std::string brand, std::string model, unsigned int passengerSeats, unsigned int totalSeats, std::string destination);
             unsigned int get_passengerSeats();
             unsigned int get_totalSeats();
             std::string get_destination();
