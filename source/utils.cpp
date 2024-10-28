@@ -39,6 +39,52 @@ namespace utils
     {
         return this->busCount;
     }
+    Garage& Garage::operator=(const Garage& obj)
+    {
+        this->carCount = obj.carCount;
+        this->busCount = obj.busCount;
+        this->motorcycleCount = obj.motorcycleCount;
+        if (obj.carCount != 1)
+        {
+            this->cars = new Car[obj.carCount];
+            for (int i = 0; i < obj.carCount; ++i)
+            {
+                cars[i].set_carData(obj.cars[i].get_brand(), obj.cars[i].get_model(), obj.cars[i].get_engineVolume(), obj.cars[i].get_color(), obj.cars[i].get_checkpointType());
+            }
+        }
+        else
+        {
+            this->cars = new Car(obj.cars->get_brand(), obj.cars->get_model(), obj.cars->get_engineVolume(), obj.cars->get_color(), obj.cars->get_checkpointType());
+        }
+        
+        if (obj.motorcycleCount != 1)
+        {
+            this->motorcycles = new Motorcycle[obj.motorcycleCount];
+            for (int i = 0; i < obj.motorcycleCount; ++i)
+            {
+                motorcycles[i].set_motorcycleData(obj.motorcycles[i].get_brand(), obj.motorcycles[i].get_model(), obj.motorcycles[i].get_engineVolume(), obj.motorcycles[i].get_horsepower(), obj.motorcycles[i].get_preferredTerrain());
+            }
+        }
+        else
+        {
+            this->motorcycles = new Motorcycle(obj.motorcycles->get_brand(), obj.motorcycles->get_model(), obj.motorcycles->get_engineVolume(), obj.motorcycles->get_horsepower(), obj.motorcycles->get_preferredTerrain());
+        }
+
+        if (obj.busCount != 1)
+        {
+            this->buses = new Bus[obj.busCount];
+            for (int i = 0; i < obj.busCount; ++i)
+            {
+                buses[i].set_busData(obj.buses[i].get_brand(), obj.buses[i].get_model(), obj.buses[i].get_passengerSeats(), obj.buses[i].get_totalSeats(), obj.buses[i].get_destination());
+            }
+        }
+        else
+        {
+            this->buses = new Bus(obj.buses->get_brand(), obj.buses->get_model(), obj.buses->get_passengerSeats(), obj.buses->get_totalSeats(), obj.buses->get_destination());
+        }
+
+        return *this;
+    }
     void Garage::addCar(std::string brand, std::string model, unsigned int liters, std::string color, std::string type)
     {
         if (this->carCount == 0)
@@ -65,7 +111,10 @@ namespace utils
                 newCars[i].set_carData(this->cars[i].get_brand(), this->cars[i].get_model(), this->cars[i].get_engineVolume(), this->cars[i].get_color(), this->cars[i].get_checkpointType());
             }
             newCars[carCount - 1].set_carData(brand, model, liters, color, type);
-            delete this->cars;
+            if (this->carCount == 2)
+                delete this->cars;
+            else
+                delete[] this->cars;
             this->cars = newCars;
         }
     }
@@ -85,7 +134,10 @@ namespace utils
                 newMotorcycles[i].set_motorcycleData(this->motorcycles[i].get_brand(), this->motorcycles[i].get_model(), this->motorcycles[i].get_engineVolume(), this->motorcycles[i].get_horsepower(), this->motorcycles[i].get_preferredTerrain());
             }
             newMotorcycles[motorcycleCount - 1].set_motorcycleData(brand, model, liters, power, terrain);
-            delete this->motorcycles;
+            if (this->motorcycleCount == 2)
+                delete this->motorcycles;
+            else
+                delete[] this->motorcycles;
             this->motorcycles = newMotorcycles;
         }
     }
@@ -105,7 +157,10 @@ namespace utils
                 newBuses[i].set_busData(this->buses[i].get_brand(), this->buses[i].get_model(), this->buses[i].get_passengerSeats(), this->buses[i].get_totalSeats(), this->buses[i].get_destination());
             }
             newBuses[busCount - 1].set_busData(brand, model, passengerSeats, totalSeats, destination);
-            delete this->buses;
+            if (this->busCount == 2)
+                delete this->buses;
+            else
+                delete[] this->buses;
             this->buses = newBuses;
         }
     }
@@ -119,22 +174,36 @@ namespace utils
         else
         {
             int j = 0;
-            Car* newCars = new Car[carCount - 1];
-            for (int i = 0; i < carCount; ++i)
+            if (this->carCount == 2)
             {
-                if (i != index)
-                {
-                    newCars[j] = this->cars[i];
-                    ++j;
-                }
+                Car* newCars = new Car();
+                if (index == 1)
+                    newCars->set_carData(this->cars[0].get_brand(), this->cars[0].get_model(), this->cars[0].get_engineVolume(), this->cars[0].get_color(), this->cars[0].get_checkpointType());
                 else
-                {
-                    ++i;
-                }
+                    newCars->set_carData(this->cars[1].get_brand(), this->cars[1].get_model(), this->cars[1].get_engineVolume(), this->cars[1].get_color(), this->cars[1].get_checkpointType());
+                delete[] this->cars;
+                this->cars = newCars;
+                --(this->carCount);
             }
-            delete[] this->cars;
-            this->cars = newCars;
-            --(this->carCount);
+            else
+            {
+                Car* newCars = new Car[carCount - 1];
+                for (int i = 0; i < carCount; ++i)
+                {
+                    if (i != index)
+                    {
+                        newCars[j] = this->cars[i];
+                        ++j;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                delete[] this->cars;
+                this->cars = newCars;
+                --(this->carCount);
+            }
         }
     }
     void Garage::deleteMotorcycle(unsigned int index)
@@ -147,22 +216,36 @@ namespace utils
         else
         {
             int j = 0;
-            Motorcycle* newMotorcycles = new Motorcycle[motorcycleCount - 1];
-            for (int i = 0; i < motorcycleCount; ++i)
+            if (this->motorcycleCount == 2)
             {
-                if (i != index)
-                {
-                    newMotorcycles[j] = this->motorcycles[i];
-                    ++j;
-                }
+                Motorcycle* newMotorcycles = new Motorcycle();
+                if (index == 1)
+                    newMotorcycles->set_motorcycleData(this->motorcycles[0].get_brand(), this->motorcycles[0].get_model(), this->motorcycles[0].get_engineVolume(), this->motorcycles[0].get_horsepower(), this->motorcycles[0].get_preferredTerrain());
                 else
-                {
-                    ++i;
-                }
+                    newMotorcycles->set_motorcycleData(this->motorcycles[1].get_brand(), this->motorcycles[1].get_model(), this->motorcycles[1].get_engineVolume(), this->motorcycles[1].get_horsepower(), this->motorcycles[1].get_preferredTerrain());
+                delete[] this->motorcycles;
+                this->motorcycles = newMotorcycles;
+                --(this->motorcycleCount);
             }
-            delete[] this->motorcycles;
-            this->motorcycles = newMotorcycles;
-            --(this->motorcycleCount);
+            else
+            {
+                Motorcycle* newMotorcycles = new Motorcycle[motorcycleCount - 1];
+                for (int i = 0; i < motorcycleCount; ++i)
+                {
+                    if (i != index)
+                    {
+                        newMotorcycles[j] = this->motorcycles[i];
+                        ++j;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                delete[] this->motorcycles;
+                this->motorcycles = newMotorcycles;
+                --(this->motorcycleCount);
+            }
         }
     }
     void Garage::deleteBus(unsigned int index)
@@ -175,22 +258,36 @@ namespace utils
         else
         {
             int j = 0;
-            Bus* newBuses = new Bus[busCount - 1];
-            for (int i = 0; i < busCount; ++i)
+            if (this->busCount == 2)
             {
-                if (i != index)
-                {
-                    newBuses[j] = this->buses[i];
-                    ++j;
-                }
+                Bus* newBuses = new Bus();
+                if (index == 1)
+                    newBuses->set_busData(this->buses[0].get_brand(), this->buses[0].get_model(), this->buses[0].get_passengerSeats(), this->buses[0].get_totalSeats(), this->buses[0].get_destination());
                 else
-                {
-                    ++i;
-                }
+                    newBuses->set_busData(this->buses[1].get_brand(), this->buses[1].get_model(), this->buses[1].get_passengerSeats(), this->buses[1].get_totalSeats(), this->buses[1].get_destination());
+                delete[] this->buses;
+                this->buses = newBuses;
+                --(this->busCount);
             }
-            delete[] this->buses;
-            this->buses = newBuses;
-            --(this->busCount);
+            else
+            {
+                Bus* newBuses = new Bus[busCount - 1];
+                for (int i = 0; i < busCount; ++i)
+                {
+                    if (i != index)
+                    {
+                        newBuses[j] = this->buses[i];
+                        ++j;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                delete[] this->buses;
+                this->buses = newBuses;
+                --(this->busCount);
+            }
         }
     }
     void Garage::listVehiclesInGarage()
@@ -198,31 +295,117 @@ namespace utils
         std::cout << "Cars:" << std::endl;
         for (int i = 0; i < carCount; ++i)
         {
-            std::cout << "\t" << (i + 1) \ 
-            << ". Brand: " << this->cars[i].get_brand() \
-            << ", Model:" << this->cars[i].get_model() \ 
-            << ", Engine volume:" << this->cars[i].get_engineVolume() \
-            << ", Color:" << this->cars[i].get_color() \
+            std::cout << "\t" << (i + 1)
+            << ". Brand:" << this->cars[i].get_brand()
+            << ", Model:" << this->cars[i].get_model() 
+            << ", Engine volume:" << this->cars[i].get_engineVolume()
+            << ", Color:" << this->cars[i].get_color()
             << ", Checkpoint type:" << this->cars[i].get_checkpointType() << std::endl;
         }
+
         std::cout << "Motorcycles: " << std::endl;
         for (int i = 0; i < motorcycleCount; ++i)
         {
-            std::cout << "\t" << i + 1 << ". Brand:" << this->motorcycles[i].get_brand() \
-            << ", Model:" << this->motorcycles[i].get_model() \
-            << ", Engine volume:" << this->motorcycles[i].get_engineVolume() \
-            << ", Horsepower:" << this->motorcycles[i].get_horsepower() \
+           std::cout << "\t" << i + 1 << ". Brand:" << this->motorcycles[i].get_brand()
+            << ", Model:" << this->motorcycles[i].get_model()
+            << ", Engine volume:" << this->motorcycles[i].get_engineVolume()
+            << ", Horsepower:" << this->motorcycles[i].get_horsepower()
             << ", Preferred terrain:" << this->motorcycles[i].get_preferredTerrain() << std::endl;
         }
+
         std::cout << "Buses: " << std::endl;
         for (int i = 0; i < busCount; ++i)
         {
-            std::cout << "\t" << i + 1 << ". Brand:" << this->buses[i].get_brand() \
-            << ", Model:" << this->buses[i].get_model() \
-            << ", Passenger seats:" << this->buses[i].get_passengerSeats() \
-            << ", Total seats:" << this->buses[i].get_totalSeats() \
+            std::cout << "\t" << i + 1 << ". Brand:" << this->buses[i].get_brand()
+            << ", Model:" << this->buses[i].get_model()
+            << ", Passenger seats:" << this->buses[i].get_passengerSeats()
+            << ", Total seats:" << this->buses[i].get_totalSeats()
             << ", Destination:" << this->buses[i].get_destination() << std::endl;
         }
+    }
+    void Garage::saveToFile(std::string filename)
+    {
+        std::ofstream saveFile(filename);
+        saveFile << this->carCount << "\n";
+        for (int i = 0; i < this->carCount; ++i)
+        {
+            saveFile << this->cars[i].get_brand() << "\n" 
+                     << this->cars[i].get_model() << "\n"
+                     << this->cars[i].get_engineVolume() << "\n"
+                     << this->cars[i].get_color() << "\n"
+                     << this->cars[i].get_checkpointType() << "\n";
+        }
+
+        saveFile << this->motorcycleCount << "\n";
+        for (int i = 0; i < this->motorcycleCount; ++i)
+        {
+            saveFile << this->motorcycles[i].get_brand() << "\n" 
+                     << this->motorcycles[i].get_model() << "\n"
+                     << this->motorcycles[i].get_engineVolume() << "\n"
+                     << this->motorcycles[i].get_horsepower() << "\n"
+                     << this->motorcycles[i].get_preferredTerrain() << "\n";
+        }
+
+        saveFile << this->busCount << "\n";
+        for (int i = 0; i < this->busCount; ++i)
+        {
+            saveFile << this->buses[i].get_brand() << "\n" 
+                     << this->buses[i].get_model() << "\n"
+                     << this->buses[i].get_passengerSeats() << "\n"
+                     << this->buses[i].get_totalSeats() << "\n"
+                     << this->buses[i].get_destination() << "\n";
+        }
+        saveFile.close();
+    }
+    Garage Garage::loadFromFile(std::string filename)
+    {
+        std::ifstream loadFile(filename);
+        Garage container;
+        unsigned int altCountCar;
+        unsigned int altCountMotorcycle;
+        unsigned int altCountBus;
+        std::string str;
+        std::string data[5];
+        loadFile >> str;
+        altCountCar = stoi(str);
+        
+        for (int i = 0; i < altCountCar; ++i)
+        {
+            for (int j = 0; j < 5; ++j)
+            {
+                loadFile >> data[j];
+            }
+            container.addCar(data[0], data[1], stoi(data[2]), data[3], data[4]);
+        }
+
+        loadFile >> str;
+        altCountMotorcycle = stoi(str);
+        
+        for (int i = 0; i < altCountMotorcycle; ++i)
+        {
+            for (int j = 0; j < 5; ++j)
+            {
+                loadFile >> data[j];
+            }
+            container.addMotorcycle(data[0], data[1], stoi(data[2]), stoi(data[3]), data[4]);
+        }
+
+        loadFile >> str;
+        altCountBus = stoi(str);
+        
+        for (int i = 0; i < altCountBus; ++i)
+        {
+            for (int j = 0; j < 5; ++j)
+            {
+                loadFile >> data[j];
+            }
+            container.addBus(data[0], data[1], stoi(data[2]), stoi(data[3]), data[4]);
+        }
+
+
+        loadFile.close();
+
+        return container;
     }
     Garage::Vehicle::Vehicle()
     {

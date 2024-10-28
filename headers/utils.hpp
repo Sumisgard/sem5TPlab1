@@ -2,6 +2,7 @@
 
 #include <string>
 #include <iostream>
+#include <fstream>
 
 namespace utils
 {
@@ -13,6 +14,7 @@ namespace utils
         unsigned int get_carCount();
         unsigned int get_motorcycleCount();
         unsigned int get_busCount();
+        Garage& operator=(const Garage& obj);
         void addCar(std::string brand, std::string model, unsigned int liters, std::string color, std::string type);
         void addMotorcycle(std::string brand, std::string model, unsigned int liters,  unsigned int power, std::string terrain);
         void addBus(std::string brand, std::string model, unsigned int passengerSeats, unsigned int totalSeats, std::string destination);
