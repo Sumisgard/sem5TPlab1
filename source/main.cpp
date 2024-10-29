@@ -102,7 +102,15 @@ int main(void)
         case 8:
             std::cout << "Type filename:\n";
             std::cin >> cfilename;
-            container = Garage::loadFromFile(cfilename);
+            try
+            {
+               container = Garage::loadFromFile(cfilename);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
+            
             break;
         case 9:
             state = 0;
