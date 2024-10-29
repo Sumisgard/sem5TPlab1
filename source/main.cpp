@@ -92,7 +92,7 @@ int main(void)
         case 6:
             std::cout << "Type bus index to delete:\n";
             std::cin >> cindex;
-            container.deleteBus(stoi(cindex));
+            container.deleteBus(stoi(cindex) - 1);
             break;
         case 7:
             std::cout << "Type filename:\n";
