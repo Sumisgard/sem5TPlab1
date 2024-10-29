@@ -36,6 +36,7 @@ namespace utils
         public:
             Vehicle();
             Vehicle(std::string brand, std::string model);
+            virtual void sayHi() = 0;
             void set_brand(std::string brand);
             void set_model(std::string model);
             std::string get_brand();
@@ -52,6 +53,7 @@ namespace utils
             Car();
             Car(Car &car);
             Car(std::string brand, std::string model, unsigned int liters, std::string color, std::string type);
+            void sayHi() override;
             void set_engineVolume(unsigned int liters);
             void set_color(std::string color);
             void set_checkpointType(std::string type);
@@ -71,6 +73,7 @@ namespace utils
             Motorcycle();
             Motorcycle(Motorcycle &motorcycle);
             Motorcycle(std::string brand, std::string model, unsigned int liters, unsigned int power, std::string terrain);
+            void sayHi() override;
             void set_engineVolume(unsigned int liters);
             void set_horsepower(unsigned int power);
             void set_preferredTerrain(std::string terrain);
@@ -90,6 +93,7 @@ namespace utils
             Bus();
             Bus(Bus &bus);
             Bus(std::string brand, std::string model, unsigned int passengerSeats, unsigned int totalSeats, std::string destination);
+            void sayHi() override;
             void set_passengerSeats(unsigned int seats);
             void set_totalSeats(unsigned int seats);
             void set_destination(std::string destination);

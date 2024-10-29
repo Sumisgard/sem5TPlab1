@@ -449,6 +449,10 @@ namespace utils
         this->color = color;
         this->checkpointType = type;
     }
+    void Garage::Car::sayHi()
+    {
+        std::cout << "Hi Car\n";
+    }
     void Garage::Car::set_engineVolume(unsigned int liters)
     {
         this->engineVolume = liters;
@@ -497,6 +501,10 @@ namespace utils
         this->horsepower = power;
         this->preferredTerrain = terrain;
     }
+    void Garage::Motorcycle::sayHi()
+    {
+        std::cout << "Hi Motorcycle\n";
+    }
     void Garage::Motorcycle::set_engineVolume(unsigned int liters)
     {
         this->engineVolume = liters;
@@ -544,6 +552,10 @@ namespace utils
         this->passengerSeats = passengerSeats;
         this->totalSeats = totalSeats;
         this->destination = destination;
+    }
+    void Garage::Bus::sayHi()
+    {
+        std::cout << "Hi Bus\n";
     }
     void Garage::Bus::set_passengerSeats(unsigned int seats)
     {
